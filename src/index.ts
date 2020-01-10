@@ -2,15 +2,16 @@ const { ApolloServer, gql } = require("apollo-server");
 const typeDefs = require("./graphql/typeDefs");
 import { resolvers } from "./graphql/resolvers";
 import { BookRepository } from "./data/BookRepository";
+import PersonRepository from "./data/PersonRepository";
+import AnimalRepository from "./data/AnimalRepository";
 
-const Knex = require('knex');
-const knexConfig = require('../knexfile');
+const Knex = require("knex");
+const knexConfig = require("../knexfile");
 
-const { Model } = require('objection');
-//const { Book } = require('./models/Book');
+const { Model } = require("objection");
 
 // Initialize knex.
-const knex = Knex(knexConfig);
+const knex = Knex(knexConfig.development);
 
 // Bind all Models to the knex instance. You only
 // need to do this once before you use any of
@@ -24,6 +25,8 @@ const server = new ApolloServer({
   resolvers,
   dataSources: () => ({
     bookRepo: new BookRepository(),
+    personRepo: new PersonRepository(),
+    animalRepo: new AnimalRepository()
     //book: Book
   })
 });

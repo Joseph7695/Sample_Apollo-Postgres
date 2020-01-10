@@ -1,26 +1,27 @@
-//import Person from "../models/Person";
-
-// interface IAuthResponse {
-//   refreshToken: String;
-//   expired_at: Number;
-// }
-
-const persons = [
-  { id: 1, firstName: "Joseph" },
-  { id: 2, firstName: "Baka" },
-  { id: 3, firstName: "Mary Ruth" }
-];
+import Person from "../models/Person";
 
 export default class PersonRepository {
   constructor() {}
   async findAllPersons() {
-    return persons;
-    //return await Person.query();
+    return await Person.query();
   }
-  async getPersonByName(name: String) {
-    // return await Person.query().where({
-    //   firstName: name
-    // });
-    //lastName:
+  async getPersonByName(name: string) {
+    return await Person.query()
+      .modify("searchByName", name)
+      .first();
+  }
+  async addPetToPerson(personID: number, petID: number) {
+    const person = await Person.query().findById(personID);
+    const fluffy = await person.$relatedQuery("pets").relate(petID);
+    return fluffy;
+  }
+  async addPerson(person: Person) {
+    return await Person.query().insert(person);
+  }
+  async editPerson(person: Person, personID: number) {
+    return await Person.query().patchAndFetchById(personID, person);
+  }
+  async deletePerson(personID: number) {
+    return await Person.query().deleteById(personID);
   }
 }

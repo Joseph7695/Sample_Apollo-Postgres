@@ -1,9 +1,10 @@
-const { ApolloServer, gql } = require("apollo-server");
+const { ApolloServer } = require("apollo-server");
 const typeDefs = require("./graphql/typeDefs");
 import { resolvers } from "./graphql/resolvers";
 import { BookRepository } from "./data/BookRepository";
 import PersonRepository from "./data/PersonRepository";
 import AnimalRepository from "./data/AnimalRepository";
+import MovieRepository from "./data/MovieRepository";
 
 const Knex = require("knex");
 const knexConfig = require("../knexfile");
@@ -26,7 +27,8 @@ const server = new ApolloServer({
   dataSources: () => ({
     bookRepo: new BookRepository(),
     personRepo: new PersonRepository(),
-    animalRepo: new AnimalRepository()
+    animalRepo: new AnimalRepository(),
+    movieRepo: new MovieRepository()
     //book: Book
   })
 });

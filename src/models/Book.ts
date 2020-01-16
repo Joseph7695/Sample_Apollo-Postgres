@@ -1,6 +1,6 @@
-import { Model, JSONSchema, Modifiers } from "objection";
+import { Model, JSONSchema } from "objection";
 
-class Book extends Model {
+export default class Book extends Model {
   id!: number;
   title!: string;
   author!: string;
@@ -18,9 +18,7 @@ class Book extends Model {
     properties: {
       id: { type: "integer" },
       title: { type: "string", minLength: 1, maxLength: 255 },
-      author: { type: "string", minLength: 1, maxLength: 255 },
+      author: { type: "string", minLength: 1, maxLength: 255 }
     }
-  }
-};
-
-module.exports = { Book };
+  };
+}

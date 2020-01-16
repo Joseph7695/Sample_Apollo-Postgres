@@ -1,4 +1,4 @@
-const { Book } = require("../models/Book");
+import Book from "../models/Book";
 
 export class BookRepository {
   constructor() {}
@@ -9,4 +9,13 @@ export class BookRepository {
   // async getBookByName(name: String) {
   //   return await Book.query().modify("searchByName", name);
   // }
+  async addBook(book: Book) {
+    return await Book.query().insert(book);
+  }
+  async editBook(book: Book, bookID: number) {
+    return await Book.query().patchAndFetchById(bookID, book);
+  }
+  async deleteBook(bookID: number) {
+    return await Book.query().deleteById(bookID);
+  }
 }
